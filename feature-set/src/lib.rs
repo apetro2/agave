@@ -2387,7 +2387,7 @@ pub static FEATURE_NAMES: LazyLock<AHashMap<Pubkey, &'static str>> = LazyLock::n
         ),
         (
             relax_intrabatch_account_locks::id(),
-            "SIMD-0083: Allow batched transactions to read/write and write/write the same accounts",
+            "SIMD-0083: Legacy intrabatch account lock relaxation feature gate (no-op)",
         ),
         (
             create_slashing_program::id(),
@@ -2463,7 +2463,7 @@ pub static FEATURE_NAMES: LazyLock<AHashMap<Pubkey, &'static str>> = LazyLock::n
         ),
         (
             static_instruction_limit::id(),
-            "SIMD-0160: static instruction limit",
+            "SIMD-0160: Legacy static instruction limit feature gate (no-op)",
         ),
         (
             discard_unexpected_data_complete_shreds::id(),

@@ -1666,10 +1666,7 @@ pub fn confirm_slot(
     prioritization_fee_cache: Option<&PrioritizationFeeCache>,
     migration_status: &MigrationStatus,
 ) -> result::Result<(), BlockstoreProcessorError> {
-    match bank
-        .feature_set
-        .is_active(&agave_feature_set::alpenglow::id())
-    {
+    match bank.feature_set.snapshot().alpenglow {
         true => confirm_slot_with_components(
             blockstore,
             bank,
@@ -6174,11 +6171,7 @@ pub mod tests {
         let bank_forks = BankForks::new_rw_arc(Bank::new_for_tests(&genesis_config));
         let bank0 = bank_forks.read().unwrap().get(0).unwrap();
         let bank1 = Bank::new_from_parent(bank0.clone(), SlotLeader::default(), 1);
-        assert!(
-            !bank1
-                .feature_set
-                .is_active(&agave_feature_set::alpenglow::id())
-        );
+        assert!(!bank1.feature_set.snapshot().alpenglow);
         let bank1 = bank_forks.write().unwrap().insert(bank1);
 
         assert!(
@@ -6211,11 +6204,7 @@ pub mod tests {
         let bank0 = bank_forks.read().unwrap().get(0).unwrap();
         let mut bank1 = Bank::new_from_parent(bank0.clone(), SlotLeader::default(), 1);
         bank1.activate_feature(&agave_feature_set::alpenglow::id());
-        assert!(
-            bank1
-                .feature_set
-                .is_active(&agave_feature_set::alpenglow::id())
-        );
+        assert!(bank1.feature_set.snapshot().alpenglow);
         let bank1 = bank_forks.write().unwrap().insert(bank1);
 
         assert!(

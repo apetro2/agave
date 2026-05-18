@@ -1148,9 +1148,8 @@ impl JsonRpcRequestProcessor {
         };
 
         let bank = self.bank(config.commitment);
-        let commission_rate_in_basis_points = bank
-            .feature_set
-            .is_active(&agave_feature_set::commission_rate_in_basis_points::id());
+        let commission_rate_in_basis_points =
+            bank.feature_set.snapshot().commission_rate_in_basis_points;
         let vote_accounts = bank.vote_accounts();
         let epoch_vote_accounts = bank
             .epoch_vote_accounts(bank.get_epoch_and_slot_index(bank.slot()).0)
